@@ -16,11 +16,20 @@ public enum Genero {
     COMEDIA("Comedia"),
     DRAMA("Drama"),
     ROMANTICA("Romántica"),
-    TERROR("Terror");   
-    
+    TERROR("Terror");
+
     String genero;
-    
-    private Genero(String genero){
+
+    private Genero(String genero) {
         this.genero = genero;
     }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
 }
