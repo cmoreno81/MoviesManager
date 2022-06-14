@@ -8,12 +8,14 @@ import com.moreno.app.MoviesManager;
 import com.moreno.db.DBConnection;
 import com.moreno.models.Genero;
 import com.moreno.models.Movies;
+import java.awt.Color;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 
 /**
  *
@@ -71,6 +73,13 @@ public class ManagerWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPane3 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,12 +162,30 @@ public class ManagerWindow extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Borrar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("ID: ");
+
+        jButton6.setText("Editar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane3.setViewportView(jTextPane3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,23 +207,38 @@ public class ManagerWindow extends javax.swing.JFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton1))
+                                .addGap(0, 0, 0)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
-                .addGap(26, 26, 26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton6)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                        .addComponent(jToggleButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)))
                 .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
@@ -223,15 +265,26 @@ public class ManagerWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCheckBox1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)
+                            .addComponent(jButton2)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton5)
+                        .addComponent(jLabel5)
+                        .addComponent(jButton6)
+                        .addComponent(jToggleButton1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,13 +304,21 @@ public class ManagerWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int total = 0;
+        jPopupMenu1.removeAll();
         try {
-            ResultSet rs = con.findMoviesByName(jTextPane1.getText());
-            while (rs.next()) {
-                total++;
-            }
-            if (total == 0) {
-                con.createMovie(pelicula.getId(), jTextPane1.getText(), jComboBox1.getSelectedItem().toString(), Integer.parseInt(jComboBox2.getSelectedItem().toString()), jCheckBox1.isSelected(), jComboBox3.getSelectedItem().toString());
+            if (jTextPane1.getText().isEmpty()) {
+
+                jPopupMenu1.add("Debe introducir un título.");
+                showPopup(jButton1);
+
+            } else {
+                ResultSet rs = con.findMoviesByName(jTextPane1.getText());
+                while (rs.next()) {
+                    total++;
+                }
+                if (total == 0) {
+                    con.createMovie(pelicula.getId(), jTextPane1.getText(), jComboBox1.getSelectedItem().toString(), Integer.parseInt(jComboBox2.getSelectedItem().toString()), jCheckBox1.isSelected(), jComboBox3.getSelectedItem().toString());
+                }
             }
 
         } catch (SQLException | ClassNotFoundException ex) {
@@ -330,11 +391,12 @@ public class ManagerWindow extends javax.swing.JFrame {
             ResultSet rs = con.readAllMovies();
             DefaultListModel listModel = new DefaultListModel();
             while (rs.next()) {
+                String id = rs.getString(1);
                 String titulo = rs.getString(2);
                 String genero = rs.getString(3);
                 String valoracion = rs.getString(4);
 
-                String[] peliculas = {titulo, "\n\t" + genero, "\n\t" + valoracion};
+                String[] peliculas = {"id: " + id, titulo, "\n\t" + genero, "\n\t" + valoracion};
                 for (int i = 0; i < peliculas.length; i++) {
                     listModel.add(i, peliculas[i]);
                 }
@@ -347,6 +409,54 @@ public class ManagerWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        int indice = Integer.parseInt(jTextPane3.getText());
+        boolean respuesta = con.deleteMovie(indice);
+        jPopupMenu1.removeAll();
+        if (respuesta) {
+            jPopupMenu1.add("Registro con id:" + indice + " borrado.");
+            showPopup(jButton5);
+        } else {
+            jPopupMenu1.add("Error al borrar el registro seleccionado");
+            showPopup(jButton5);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            int indice = Integer.parseInt(jTextPane3.getText());
+            String titulo = null, genero = null, valoracion = null, formato = null;
+            boolean visto = false;
+            // Comprobamos datos a actualizar
+            ResultSet rs = con.findMoviesById(indice);
+            while (rs.next()) {
+                titulo = (!jTextPane1.getText().isEmpty()) ? jTextPane1.getText() : rs.getString(2);
+                genero = (!jComboBox1.getSelectedItem().toString().isEmpty()) ? jComboBox1.getSelectedItem().toString() : rs.getString(3);
+                valoracion = (!jComboBox2.getSelectedItem().toString().isEmpty()) ? jComboBox2.getSelectedItem().toString() : rs.getString(4);
+                visto = (jCheckBox1.isSelected()) ? jCheckBox1.isSelected() : rs.getBoolean(5);
+                formato = (!jComboBox3.getSelectedItem().toString().isEmpty()) ? jComboBox3.getSelectedItem().toString() : rs.getString(6);
+            }
+
+            int respuesta = con.updateMovie(indice, titulo, genero, Integer.parseInt(valoracion), visto, formato);
+            jPopupMenu1.removeAll();
+            if (respuesta > 0) {
+                jPopupMenu1.add("Registro con id:" + indice + " actualizado.");
+                showPopup(jButton6);
+            } else {
+                jPopupMenu1.add("Error al actualizar el registro seleccionado");
+                showPopup(jButton6);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+    private void showPopup(JButton button) {
+        jPopupMenu1.pack();
+        jPopupMenu1.setForeground(Color.red);
+        jPopupMenu1.setVisible(true);
+        jPopupMenu1.show(button, 0, 25);
+    }
     /**
      * @param args the command line arguments
      */
@@ -356,6 +466,8 @@ public class ManagerWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -364,11 +476,16 @@ public class ManagerWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTextPane jTextPane3;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 

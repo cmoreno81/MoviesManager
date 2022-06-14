@@ -53,6 +53,7 @@ public class DBConnection {
         PreparedStatement stm = con.prepareStatement(sql);
         stm.setString(1, titulo);
         stm.setString(2, genero);
+        valoracion = (visto) ? valoracion : 0;
         stm.setInt(3, valoracion);
         stm.setBoolean(4, visto);
         stm.setString(5, formato);
@@ -82,7 +83,7 @@ public class DBConnection {
         ResultSet rs = null;
         try {
             String sql = "SELECT * FROM MOVIES WHERE TITULO = '" + titulo + "' ";
-            Statement st = st = con.createStatement();
+            Statement st = con.createStatement();
 
             st.execute(sql);
             rs = st.getResultSet();
@@ -92,6 +93,58 @@ public class DBConnection {
         }
 
         return rs;
+    }
+
+    public ResultSet findMoviesById(int id) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM MOVIES WHERE ID = " + id;
+            Statement st = con.createStatement();
+
+            st.execute(sql);
+            rs = st.getResultSet();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+    }
+
+    public boolean deleteMovie(int id) {
+        boolean resultado = false;
+        try {
+            String sql = "DELETE FROM MOVIES WHERE ID = " + id;
+            Statement st = con.createStatement();
+            int valor = st.executeUpdate(sql);
+
+            if (valor > 0) {
+                resultado = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return resultado;
+    }
+
+    public int updateMovie(int id, String titulo, String genero, int valoracion, boolean visto, String formato) {
+        int resultado = 0;
+        try {
+            String sql = "UPDATE MOVIES SET titulo = ?, genero = ?, valoracion= ?, visto=?, formato =? WHERE id = " + id;            
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, titulo);
+            stm.setString(2, genero);
+            valoracion = (visto) ? valoracion : 0;
+            stm.setInt(3, valoracion);
+            stm.setBoolean(4, visto);
+            stm.setString(5, formato);
+            resultado = stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return resultado;
     }
 
 }
