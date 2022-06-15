@@ -454,44 +454,54 @@ public class ManagerWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
     // Botón 'Borrar'
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        int indice = Integer.parseInt(jTextPane3.getText());
-        boolean respuesta = con.deleteMovie(indice);
         jPopupMenu1.removeAll();
-        if (respuesta) {
-            jPopupMenu1.add("Registro con id:" + indice + " borrado.");
-            showPopup(jButton5);
+        if (!jTextPane3.getText().isEmpty()) {
+            int indice = Integer.parseInt(jTextPane3.getText());
+            boolean respuesta = con.deleteMovie(indice);
+            if (respuesta) {
+                jPopupMenu1.add("Registro con id:" + indice + " borrado.");
+                showPopup(jButton5);
+            } else {
+                jPopupMenu1.add("No hay ningún registro con el id especificado.");
+                showPopup(jButton5);
+            }
         } else {
-            jPopupMenu1.add("Error al borrar el registro seleccionado");
-            showPopup(jButton5);
+            jPopupMenu1.add("Introduzca un id");
+            jPopupMenu1.show(jTextPane3, 0, 25);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
     // Botón 'Editar'
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
-            int indice = Integer.parseInt(jTextPane3.getText());
-            String titulo = null, genero = null, valoracion = null, formato = null;
-            boolean visto = false;
-            int respuesta = 0;
-            // Comprobamos datos a actualizar (si existe el id)
-            ResultSet rs = con.findMoviesById(indice);
-            while (rs.next()) {
-                titulo = (!jTextPane1.getText().isEmpty()) ? jTextPane1.getText() : rs.getString(2);
-                genero = (!jComboBox1.getSelectedItem().toString().isEmpty()) ? jComboBox1.getSelectedItem().toString() : rs.getString(3);
-                valoracion = (!jComboBox2.getSelectedItem().toString().isEmpty()) ? jComboBox2.getSelectedItem().toString() : rs.getString(4);
-                visto = (jCheckBox1.isSelected()) ? jCheckBox1.isSelected() : rs.getBoolean(5);
-                formato = (!jComboBox3.getSelectedItem().toString().isEmpty()) ? jComboBox3.getSelectedItem().toString() : rs.getString(6);
-                respuesta = con.updateMovie(indice, titulo, genero, Integer.parseInt(valoracion), visto, formato);
+            jPopupMenu1.removeAll();
+            if (!jTextPane3.getText().isEmpty()) {
+                int indice = Integer.parseInt(jTextPane3.getText());
+                String titulo = null, genero = null, valoracion = null, formato = null;
+                boolean visto = false;
+                int respuesta = 0;
+                // Comprobamos datos a actualizar (si existe el id)
+                ResultSet rs = con.findMoviesById(indice);
+                while (rs.next()) {
+                    titulo = (!jTextPane1.getText().isEmpty()) ? jTextPane1.getText() : rs.getString(2);
+                    genero = (!jComboBox1.getSelectedItem().toString().isEmpty()) ? jComboBox1.getSelectedItem().toString() : rs.getString(3);
+                    valoracion = (!jComboBox2.getSelectedItem().toString().isEmpty()) ? jComboBox2.getSelectedItem().toString() : rs.getString(4);
+                    visto = (jCheckBox1.isSelected()) ? jCheckBox1.isSelected() : rs.getBoolean(5);
+                    formato = (!jComboBox3.getSelectedItem().toString().isEmpty()) ? jComboBox3.getSelectedItem().toString() : rs.getString(6);
+                    respuesta = con.updateMovie(indice, titulo, genero, Integer.parseInt(valoracion), visto, formato);
+                }
+
+                if (respuesta > 0) {
+                    jPopupMenu1.add("Registro con id:" + indice + " actualizado.");
+                    showPopup(jButton6);
+                } else {
+                    jPopupMenu1.add("No hay ningún registro con el id especificado.");
+                    showPopup(jButton6);
+                }
+            } else {
+                jPopupMenu1.add("Introduzca un id");
+                jPopupMenu1.show(jTextPane3, 0, 25);
             }
 
-            jPopupMenu1.removeAll();
-            if (respuesta > 0) {
-                jPopupMenu1.add("Registro con id:" + indice + " actualizado.");
-                showPopup(jButton6);
-            } else {
-                jPopupMenu1.add("No hay ningún registro con el id especificado.");
-                showPopup(jButton6);
-            }
         } catch (SQLException ex) {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
