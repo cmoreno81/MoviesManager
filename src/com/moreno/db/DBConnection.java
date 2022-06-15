@@ -96,6 +96,23 @@ public class DBConnection {
         return rs;
 
     }
+    public ResultSet readAllByLimit(int limit) {
+
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM MOVIES ORDER BY ID ASC FETCH FIRST " + limit + " ROWS ONLY";
+            Statement st = st = con.createStatement();
+
+            st.execute(sql);
+            rs = st.getResultSet();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+
+    }
 
     public ResultSet findMoviesByName(String titulo) {
         ResultSet rs = null;
