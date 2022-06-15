@@ -29,8 +29,8 @@ public class DBConnection {
     private Properties prop = new Properties();
 
     public DBConnection() throws IOException, ClassNotFoundException {
-        Path path = Paths.get("credentials.properties");
-        try ( FileInputStream fis = new FileInputStream(new File("/Users/cristina/cursos/JAVA APP/MoviesManager/src/com/moreno/models/credentials.properties"))) {
+        Path ruta = Paths.get("src/com/moreno/models/credentials.properties");
+        try ( FileInputStream fis = new FileInputStream(new File(ruta.toAbsolutePath().toString()))) {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             prop.load(fis);
             con = DriverManager.getConnection(prop.get("URL").toString(), prop.get("USER").toString(), prop.get("PASSWORD").toString());
@@ -51,12 +51,12 @@ public class DBConnection {
         String sql = "insert into MOVIES(ID, TITULO, GENERO, VALORACION, VISTO, FORMATO) VALUES (next value for pid_seq,?,?,?,?,?)";
 
         PreparedStatement stm = con.prepareStatement(sql);
-        stm.setString(1, titulo);
-        stm.setString(2, genero);
+        stm.setString(1, titulo.trim());
+        stm.setString(2, genero.trim());
         valoracion = (visto) ? valoracion : 0;
         stm.setInt(3, valoracion);
         stm.setBoolean(4, visto);
-        stm.setString(5, formato);
+        stm.setString(5, formato.trim());
         stm.execute();
 
     }
@@ -65,7 +65,25 @@ public class DBConnection {
 
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM MOVIES";
+            String sql = "SELECT * FROM MOVIES ORDER BY ID DESC";
+            Statement st = st = con.createStatement();
+
+            st.execute(sql);
+            rs = st.getResultSet();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+
+    }
+    
+    public ResultSet readAllByFilter(String filtro) {
+
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM MOVIES WHERE FORMATO = '" + filtro + "' ORDER BY ID DESC";
             Statement st = st = con.createStatement();
 
             st.execute(sql);
@@ -82,7 +100,7 @@ public class DBConnection {
     public ResultSet findMoviesByName(String titulo) {
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM MOVIES WHERE TITULO = '" + titulo + "' ";
+            String sql = "SELECT * FROM MOVIES WHERE TITULO = '" + titulo + "' ORDER BY ID DESC";
             Statement st = con.createStatement();
 
             st.execute(sql);
