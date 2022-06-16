@@ -394,28 +394,8 @@ public class ManagerWindow extends javax.swing.JFrame {
     // Botón 'Filtrar vistas'
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        try {
-            ResultSet rs = con.readAllByFilter(jComboBox4.getSelectedItem().toString());
-            DefaultListModel listModel = new DefaultListModel();
-            listModel.clear();
-            while (rs.next()) {
-                String id = rs.getString(1);
-                String titulo = rs.getString(2);
-                String genero = rs.getString(3);
-                String valoracion = rs.getString(4);
-                Boolean visto = rs.getBoolean(5);
-                if (visto) {
-                    String[] peliculas = {"id: " + id, titulo, "\n\t" + genero, "\n\t" + valoracion};
-                    for (int i = 0; i < peliculas.length; i++) {
-                        listModel.add(i, peliculas[i]);
-                    }
-                }
-            }
-            // Asociar el modelo de lista al JList
-            jList1.setModel(listModel);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ResultSet rs = con.readAllByFilter(jComboBox4.getSelectedItem().toString());
+        resultList(rs, true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -426,28 +406,8 @@ public class ManagerWindow extends javax.swing.JFrame {
     // Botón 'Filtrar pendientes'
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        try {
-            ResultSet rs = con.readAllByFilter(jComboBox4.getSelectedItem().toString());
-            DefaultListModel listModel = new DefaultListModel();
-            listModel.clear();
-            while (rs.next()) {
-                String id = rs.getString(1);
-                String titulo = rs.getString(2);
-                String genero = rs.getString(3);
-                String valoracion = rs.getString(4);
-                Boolean visto = rs.getBoolean(5);
-                if (!visto) {
-                    String[] peliculas = {"id: " + id, titulo, "\n\t" + genero, "\n\t" + valoracion};
-                    for (int i = 0; i < peliculas.length; i++) {
-                        listModel.add(i, peliculas[i]);
-                    }
-                }
-            }
-            // Asociar el modelo de lista al JList
-            jList1.setModel(listModel);
-        } catch (SQLException ex) {
-            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ResultSet rs = con.readAllByFilter(jComboBox4.getSelectedItem().toString());
+        resultList(rs, false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -458,27 +418,8 @@ public class ManagerWindow extends javax.swing.JFrame {
     // Botón 'Ver todo'
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-        try {
-            ResultSet rs = con.readAllMovies();
-            DefaultListModel listModel = new DefaultListModel();
-            listModel.clear();
-            while (rs.next()) {
-                String id = rs.getString(1);
-                String titulo = rs.getString(2);
-                String genero = rs.getString(3);
-                String valoracion = rs.getString(4);
-
-                String[] peliculas = {"id: " + id, titulo, "\n\t" + genero, "\n\t" + valoracion};
-                for (int i = 0; i < peliculas.length; i++) {
-                    listModel.add(i, peliculas[i]);
-                }
-
-                // Asociar el modelo de lista al JList
-                jList1.setModel(listModel);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ResultSet rs = con.readAllMovies();
+        resultListAll(rs);
     }//GEN-LAST:event_jButton4ActionPerformed
     // Botón 'Borrar'
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -536,9 +477,44 @@ public class ManagerWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
     // Botón 'Listar'
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        int limit = Integer.parseInt(jComboBox5.getSelectedItem().toString());
+        ResultSet rs = con.readAllByLimit(limit);
+        resultListAll(rs);
+    }//GEN-LAST:event_jButton7ActionPerformed
+    private void showPopup(JButton button) {
+        jPopupMenu1.pack();
+        jPopupMenu1.setForeground(Color.red);
+        jPopupMenu1.setVisible(true);
+        jPopupMenu1.show(button, 0, 25);
+    }
+
+    private void resultList(ResultSet rs, boolean visto) {
         try {
-            int limit = Integer.parseInt(jComboBox5.getSelectedItem().toString());
-            ResultSet rs = con.readAllByLimit(limit);
+            DefaultListModel listModel = new DefaultListModel();
+            listModel.clear();
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String titulo = rs.getString(2);
+                String genero = rs.getString(3);
+                String valoracion = rs.getString(4);
+                boolean vistoQ = rs.getBoolean(5);
+                if (vistoQ == visto) {
+                    String[] peliculas = {"id: " + id, titulo, "\n\t" + genero, "\n\t" + valoracion};
+                    for (int i = 0; i < peliculas.length; i++) {
+                        listModel.add(i, peliculas[i]);
+                    }
+                } else {
+                }
+            }
+            // Asociar el modelo de lista al JList
+            jList1.setModel(listModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void resultListAll(ResultSet rs) {
+        try {
             DefaultListModel listModel = new DefaultListModel();
             listModel.clear();
             while (rs.next()) {
@@ -558,12 +534,6 @@ public class ManagerWindow extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ManagerWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
-    private void showPopup(JButton button) {
-        jPopupMenu1.pack();
-        jPopupMenu1.setForeground(Color.red);
-        jPopupMenu1.setVisible(true);
-        jPopupMenu1.show(button, 0, 25);
     }
     /**
      * @param args the command line arguments
